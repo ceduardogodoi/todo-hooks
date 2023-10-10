@@ -1,25 +1,26 @@
-import { useTodos } from '../hooks/useTodos'
 import { TodosCount } from './TodosCount'
 import { TodosLeft } from './TodosLeft'
 
-export function TodosList() {
-  // Desestrutura a propriedade todos
-  // e função remove do contexto
-  // através do custom hook useTodos
-  const { todos, remove } = useTodos()
+type TodosListProps = {
+  todos: string[]
+  remove: (index: number) => void
+  todosLeft: number
+}
 
-  // Função callback executada ao clicar
-  // no botão Delete
+// Pegando as props sem desestruturá-las
+// também é uma alternativa
+export function TodosList(props: TodosListProps) {
+  // Função executada ao clicar no botão delete
   function handleDelete(index: number) {
-    // função desestruturada
-    // do contexto
-    remove(index)
+    // Usando props.remove pois não desestruturamos na linha 11
+    props.remove(index)
   }
 
   return (
     <>
       <ul>
-        {todos.map((todo, index) => (
+        {/* Usando props.todos pois não desestruturamos na linha 11 */}
+        {props.todos.map((todo, index) => (
           <li key={index}>
             <span>{todo}</span>
             <button onClick={() => handleDelete(index)}>Delete</button>
@@ -28,10 +29,14 @@ export function TodosList() {
       </ul>
 
       {/* Usa o componente TodosCount */}
-      <TodosCount />
+      {/* Passamos a prop count para que o componente */}
+      {/* TodosCount exiba a quantidade de "todos" */}
+      <TodosCount count={props.todos.length} />
 
       {/* Usa o componente TodosLeft */}
-      <TodosLeft />
+      {/* Passamos a prop todosLeft para que o componente */}
+      {/* TodosLeft exiba a quantidade de "todos" restantes na versão "free" */}
+      <TodosLeft todosLeft={props.todosLeft} />
     </>
   )
 }

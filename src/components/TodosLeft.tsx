@@ -1,8 +1,8 @@
-import { useTodos } from '../hooks/useTodos'
+type TodosLeftProps = {
+  todosLeft: number
+}
 
-export function TodosLeft() {
-  const { todosLeft } = useTodos()
-
+export function TodosLeft({ todosLeft }: TodosLeftProps) {
   return (
     <p>Free version - Todos left: {todosLeft}</p>
   )

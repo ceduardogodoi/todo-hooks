@@ -1,10 +1,18 @@
 import { useState } from 'react'
-import { useTodos } from '../hooks/useTodos';
 
-export function TodoAdd() {
+// Tipagem para as props
+// que o component TodoAdd
+// deve receber
+type TodoAddProps = {
+  add: (text: string) => void
+}
+
+// Desestruturando as props com sua tipagem
+export function TodoAdd({ add }: TodoAddProps) {
   const [text, setText] = useState('')
-  const { add } = useTodos()
 
+  // Função que é chamada no clique
+  // do botão add
   function handleAdd() {
     if (text.trim().length > 0) {
       add(text)
